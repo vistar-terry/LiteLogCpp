@@ -36,7 +36,10 @@ mkdir build
 cd build
 cmake ..
 make
+./litelog_samples
 ```
+
+![image-20250615142237591](img/image-20250615142237591.png)
 
 
 
