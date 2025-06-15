@@ -5,31 +5,29 @@
 
 
 
-LiteLogCpp is a lightweight C++log library designed specifically for modern C++applications. It provides rich logging functions, including multi-level logging, tagging system, color output, etc., while maintaining a simple and easy-to-use interface.
+LiteLogCpp 是一个轻量级的 C++ 日志库，专为现代 C++ 应用程序设计。它提供了丰富的日志功能，包括多级日志、标签系统、彩色输出等，同时保持了简洁易用的接口。
 
-repository url: [https://github.com/vistar-terry/LiteLogCpp](https://github.com/vistar-terry/LiteLogCpp)
+仓库链接: [https://github.com/vistar-terry/LiteLogCpp](https://github.com/vistar-terry/LiteLogCpp)
 
 issues: [https://github.com/vistar-terry/LiteLogCpp/issues](https://github.com/vistar-terry/LiteLogCpp/issues)
 
-If this project helps you, please consider giving it a star! 
-
-You can also communicate any issues on the issues page.
+如果对你有帮助，欢迎Star，有任何问题可以在issues页面交流。
 
 
 
-## Features
+## 特性
 
-- **Lightweight minimalist design**: Single-header implementation, easy to integrate
-- **Multi-level logging**: Supports setting different log levels
-- **Tag system**: Supports adding category tags to logs, enabling tag-based filtering and configuration
-- **Color output**: Supports ANSI color logging (optional mode)
-- **File output**: Supports logging to files
-- **Source location**: Configurable display of code location (file name, line number, function name) (optional mode)
-- **High-precision timestamps**: Supports second, millisecond, and microsecond precision (optional mode)
+- **轻量级设计**：单头文件实现，易于集成
+- **支持设置不同日志等级**
+- **标签系统**：支持为日志添加分类标签，支持按标签过滤和配置
+- **彩色输出**：支持 ANSI 彩色日志输出（模式可选）
+- **文件输出**：支持日志文件输出
+- **位置信息**：可配置代码位置显示（文件名、行号、函数名）（模式可选）
+- **高精度时间戳**：支持秒、毫秒、微秒级时间戳（模式可选）
 
 
 
-## Fast Start
+## 快速开始
 
 ```bash
 git clone https://github.com/vistar-terry/LiteLogCpp.git
@@ -42,9 +40,9 @@ make
 
 
 
-## Add to your project
+## 集成到项目
 
-In the file where logging is required, include the `LiteLog.hpp` file located under the `src` directory of this repository:
+在需要记录日志的文件中包含 src 下的 LiteLog.hpp 文件：
 
 ```cpp
 #include "LiteLog.hpp"
@@ -52,229 +50,230 @@ In the file where logging is required, include the `LiteLog.hpp` file located un
 
 
 
-## Basic Usage
+## 基本用法
 
 ```cpp
-// Record unlabeled logs
+// 记录无标签日志
 LOG_INFO("Application started");
 LOG_DEBUG("Loading configuration...");
 LOG_WARN("Low memory warning");
 LOG_ERROR("Failed to open file: %s", filename);
 
-// Record labeled logs
+// 记录带标签日志
 LOG_INFO_T("NETWORK", "Connected to %s:%d", host, port);
 LOG_DEBUG_T("DATABASE", "Executing query: %s", query);
 ```
 
 
 
-## Configure the logging system
+## 配置日志系统
 
 ```cpp
-// Set global log level
+// 设置全局日志级别
 Logger::instance().setLevel(LogLevel::Debug);
 
-// Add console output (enabled by default)
+// 添加控制台输出（默认已启用）
 Logger::instance().consoleOutput(true);
 
-// Set log file
+// 设置日志文件
 Logger::instance().setLogDirectory("/var/log/myapp", "myapp");
 
-// Configure tag display
+// 配置标签显示
 Logger::instance().configureTag("NETWORK", ansi::blue);
 Logger::instance().configureTag("DATABASE", ansi::magenta);
 
-// Set timestamp precision to microseconds
+// 设置时间戳精度为微秒
 Logger::instance().setTimestampPrecision(TimestampPrecision::MICROSECONDS);
 ```
 
 
 
-## Interface Description
+## 接口说明
 
-### Log Macros
+### 日志宏
 
-#### Unlabeled Log Macros
+#### 无标签日志宏
 
-| Macro Define          | Log Level | Example                                     |
-| :-------------------- | :-------- | :------------------------------------------ |
-| `LOG_TRACE(fmt, ...)` | Trace     | `LOG_TRACE("Entering function")`            |
-| `LOG_DEBUG(fmt, ...)` | Debug     | `LOG_DEBUG("Value: %d", value)`             |
-| `LOG_INFO(fmt, ...)`  | Info      | `LOG_INFO("Application started")`           |
-| `LOG_WARN(fmt, ...)`  | Warn      | `LOG_WARN("Resource low")`                  |
-| `LOG_ERROR(fmt, ...)` | Error     | `LOG_ERROR("File not found: %s", filename)` |
-| `LOG_FATAL(fmt, ...)` | Fatal     | `LOG_FATAL("Critical error, exiting")`      |
+| 宏定义                | 日志级别 | 示例                                        |
+| :-------------------- | :------- | :------------------------------------------ |
+| `LOG_TRACE(fmt, ...)` | Trace    | `LOG_TRACE("Entering function")`            |
+| `LOG_DEBUG(fmt, ...)` | Debug    | `LOG_DEBUG("Value: %d", value)`             |
+| `LOG_INFO(fmt, ...)`  | Info     | `LOG_INFO("Application started")`           |
+| `LOG_WARN(fmt, ...)`  | Warn     | `LOG_WARN("Resource low")`                  |
+| `LOG_ERROR(fmt, ...)` | Error    | `LOG_ERROR("File not found: %s", filename)` |
+| `LOG_FATAL(fmt, ...)` | Fatal    | `LOG_FATAL("Critical error, exiting")`      |
 
-#### Labeled Log Macros
+#### 带标签日志宏
 
-| Macro Define                 | Log Level | Example                                      |
-| :--------------------------- | :-------- | :------------------------------------------- |
-| `LOG_TRACE_T(tag, fmt, ...)` | Trace     | `LOG_TRACE_T("NETWORK", "Packet received")`  |
-| `LOG_DEBUG_T(tag, fmt, ...)` | Debug     | `LOG_DEBUG_T("DB", "Query: %s", sql)`        |
-| `LOG_INFO_T(tag, fmt, ...)`  | Info      | `LOG_INFO_T("AUTH", "User logged in")`       |
-| `LOG_WARN_T(tag, fmt, ...)`  | Warn      | `LOG_WARN_T("PERF", "Slow response")`        |
-| `LOG_ERROR_T(tag, fmt, ...)` | Error     | `LOG_ERROR_T("IO", "Write failed")`          |
-| `LOG_FATAL_T(tag, fmt, ...)` | Fatal     | `LOG_FATAL_T("CORE", "Unrecoverable error")` |
+| 宏定义                       | 日志级别 | 示例                                         |
+| :--------------------------- | :------- | :------------------------------------------- |
+| `LOG_TRACE_T(tag, fmt, ...)` | Trace    | `LOG_TRACE_T("NETWORK", "Packet received")`  |
+| `LOG_DEBUG_T(tag, fmt, ...)` | Debug    | `LOG_DEBUG_T("DB", "Query: %s", sql)`        |
+| `LOG_INFO_T(tag, fmt, ...)`  | Info     | `LOG_INFO_T("AUTH", "User logged in")`       |
+| `LOG_WARN_T(tag, fmt, ...)`  | Warn     | `LOG_WARN_T("PERF", "Slow response")`        |
+| `LOG_ERROR_T(tag, fmt, ...)` | Error    | `LOG_ERROR_T("IO", "Write failed")`          |
+| `LOG_FATAL_T(tag, fmt, ...)` | Fatal    | `LOG_FATAL_T("CORE", "Unrecoverable error")` |
 
 
 
-### Configuration Methods
+### 配置方法
 
-#### Log Level Configuration
+#### 日志等级配置
 
 ```cpp
-// Set log level
+// 设置全局日志等级
 void setLevel(LogLevel level);
 
-// Set tag log level
+// 设置标签日志等级
 void setTagLevel(const std::string &tag, LogLevel level);
 ```
 
-- **Parameter Description**:
-    - `level`: Log level enumeration value
-    - `LogLevel::Trace`: Most detailed debug information
-    - `LogLevel::Debug`: Debug information
-    - `LogLevel::Info`: General information (**default**)
-    - `LogLevel::Warn`: Warning information
-    - `LogLevel::Error`: Error information
-    - `LogLevel::Fatal`: Critical error
-    - `LogLevel::OFF`: Disable all logs
-    - `tag`: Tag name string
+**参数说明**：
 
-#### Output Target Control
+- `level`: 日志级别枚举值
+    - `LogLevel::Trace`: 最详细的调试信息
+    - `LogLevel::Debug`: 调试信息
+    - `LogLevel::Info`: 常规信息 (默认)
+    - `LogLevel::Warn`: 警告信息
+    - `LogLevel::Error`: 错误信息
+    - `LogLevel::Fatal`: 严重错误
+    - `LogLevel::OFF`: 关闭所有日志
+- `tag`: 标签名称字符串
+
+#### 输出目标控制
 
 ```cpp
-// Enable/Disable Console Output
+// 开启/禁用控制台输出
 void consoleOutput(const bool& console_output);
 
-// Set Log File Path
+// 设置日志文件路径
 bool setLogFile(const std::string &file_path, bool append = true);
 
-// Set Log Directory and Log File Prefix
+// 设置日志目录与日志文件前缀
 bool setLogDirectory(const std::string &dir_path,
                     const std::string &file_prefix = "app",
                     bool append = true,
                     bool daily_rotation = false);
 
-// Close Log File
+// 关闭日志文件
 void closeLogFile();
 
-// Get Current Log File Path
+// 获取当前日志文件路径
 std::string getLogFilePath() const;
 ```
 
-**Parameter Description**:
+**参数说明**：
 
-- `console_output`: Whether to enable console output
-- `file_path`: Full path to the log file
-- `dir_path`: Path to the log directory
-- `file_prefix`: Log file name prefix (default is "app")
-- `append`: Whether to append to the existing file (default is `true`)
-- `daily_rotation`: Whether to rotate files by date (default is `false`)
+- `console_output`: 是否开启控制台输出
+- `file_path`: 日志文件完整路径
+- `dir_path`: 日志目录路径
+- `file_prefix`: 日志文件名前缀（默认为app）
+- `append`: 是否追加到现有文件 (默认为 true)
+- `daily_rotation`: 是否按日期轮转文件 (默认为 false)
 
-#### Tag Configuration
+#### 标签配置
 
 ```cpp
-// Configure tag display
+// 配置标签显示
 void configureTag(const std::string &tag, const char *color, 
                  const char *style = "", bool enabled = true);
 
-// Enable/Disable Specific Tags
+// 启用/禁用特定标签
 void enableTag(const std::string &tag, bool enabled);
 
-// Enable/Disable Tag Display
+// 启用/禁用标签显示
 void enableTags(bool enabled);
 ```
 
-**Parameter Description**:
+**参数说明**：
 
-- `tag`: Tag name string
-- `color`: ANSI color code (e.g., `ansi::blue`)
-- `style`: ANSI style code (e.g., `ansi::bold`)
-- `enabled`: Whether to enable the tag
+- `tag`: 标签名称字符串
+- `color`: ANSI 颜色代码 (如 ansi::blue)
+- `style`: ANSI 样式代码 (如 ansi::bold)
+- `enabled`: 是否启用标签
 
-#### Display Format Configuration
+#### 显示格式配置
 
 ```cpp
-// Set color mode
+// 设置颜色模式
 void setColorMode(ColorMode color_mode);
 
-// Enable/Disable Timestamp
+// 启用/禁用时间戳
 void enableTimestamp(bool enabled);
 
-// Set Timestamp Precision
+// 设置时间戳精度
 void setTimestampPrecision(TimestampPrecision precision);
 
-// Set Location Information Display Mode
+// 设置位置信息显示模式
 void setLocationMode(LocationDisplayMode mode, 
                     const std::string &base_path = "");
 ```
 
-**Parameter Description**:
+**参数说明**：
 
-- `color_mode`: Color mode enumeration
-    - `ColorMode::OFF`: Turn off all color output
-    - `ColorMode::TAG`: Colored output for tags and log levels
-    - `ColorMode::LINE`: Colored output for the entire line (**default**)
-- `precision`: Timestamp precision enumeration
-    - `TimestampPrecision::SECONDS`: Second-level precision
-    - `TimestampPrecision::MILLISECONDS`: Millisecond-level precision (**default**)
-    - `TimestampPrecision::MICROSECONDS`: Microsecond-level precision
-- `mode`: Source location display mode enumeration
-    - `LocationDisplayMode::FULL_PATH`: Display full file path
-    - `LocationDisplayMode::FILENAME_ONLY`: Display only the file name (**default**)
-    - `LocationDisplayMode::RELATIVE_PATH`: Display relative path
-    - `LocationDisplayMode::NONE`: Do not display location information
-- `base_path`: Base path used when displaying relative paths
-
-
-
-### Enum Types
-
-#### Log Level (`LogLevel`)
-
-- `Trace`: Most detailed debug information
-- `Debug`: Debug information
-- `Info`: General information (**default**)
-- `Warn`: Warning information
-- `Error`: Error information
-- `Fatal`: Critical error
-- `OFF`: Disable all logs
-
-#### Timestamp Precision (`TimestampPrecision`)
-
-- `SECONDS`: Second-level precision
-- `MILLISECONDS`: Millisecond-level precision (**default**)
-- `MICROSECONDS`: Microsecond-level precision
-
-#### Source Location Display Mode (`LocationDisplayMode`)
-
-- `FULL_PATH`: Display full file path
-- `FILENAME_ONLY`: Display only the file name (**default**)
-- `RELATIVE_PATH`: Display relative path
-- `NONE`: Do not display location information
-
-#### Color Output Mode (`ColorMode`)
-
-- `OFF`: Color output disabled
-- `TAG`: Colored output for tags and log levels (**default**)
-- `LINE`: Colored output for the entire line
+- `color_mode`: 颜色模式枚举值
+    - `ColorMode::OFF`: 关闭所有颜色
+    - `ColorMode::TAG`: 标签和等级彩色输出
+    - `ColorMode::LINE`: 整行彩色输出 (默认)
+- `precision`: 时间戳精度枚举值
+    - `TimestampPrecision::SECONDS`: 秒级精度
+    - `TimestampPrecision::MILLISECONDS`: 毫秒级精度 (默认)
+    - `TimestampPrecision::MICROSECONDS`: 微秒级精度
+- `mode`: 位置信息显示模式枚举值
+    - `LocationDisplayMode::FULL_PATH`: 显示完整路径
+    - `LocationDisplayMode::FILENAME_ONLY`: 只显示文件名 (默认)
+    - `LocationDisplayMode::RELATIVE_PATH`: 显示相对路径
+    - `LocationDisplayMode::NONE`: 不显示位置信息
+- `base_path`: 相对路径的基准路径
 
 
 
-## Configuration Items
+### 枚举类型
 
-#### Predefined Tag Colors
+#### 日志级别 (LogLevel)
 
-LiteLogCpp comes with predefined colors for commonly used tags:
+- `Trace`：最详细的调试信息
+- `Debug`：调试信息
+- `Info`：常规信息 (默认)
+- `Warn`：警告信息
+- `Error`：错误信息
+- `Fatal`：严重错误
+- `OFF`：关闭所有日志
 
-- `NETWORK`: Blue
-- `DATABASE`: Magenta
-- `UI`: Green
-- `SYSTEM`: Yellow
-- `SECURITY`: Red
+#### 时间戳精度 (TimestampPrecision)
 
-You can customize or add new tags:
+- `SECONDS`：秒级精度
+- `MILLISECONDS`：毫秒级精度 (默认)
+- `MICROSECONDS`：微秒级精度
+
+#### 位置信息显示模式 (LocationDisplayMode)
+
+- `FULL_PATH`：显示完整路径
+- `FILENAME_ONLY`：只显示文件名 (默认)
+- `RELATIVE_PATH`：显示相对路径
+- `NONE`：不显示位置信息
+
+#### 彩色输出模式 (ColorMode)
+
+- `OFF`：关闭
+- `TAG`：仅标签和等级彩色输出 (默认)
+- `LINE`：整行彩色输出
+
+
+
+## 配置选项
+
+### 预设标签颜色
+
+LiteLogCpp 预配置了常用标签的颜色：
+
+- `NETWORK`：蓝色
+- `DATABASE`：洋红色
+- `UI`：绿色
+- `SYSTEM`：黄色
+- `SECURITY`：红色
+
+您可以自定义或添加新标签：
 
 ```cpp
 Logger::instance().configureTag("AUDIT", ansi::cyan);
@@ -283,9 +282,9 @@ Logger::instance().configureTag("PERFORMANCE", ansi::yellow, ansi::bold);
 
 
 
-#### ANSI color constants
+### ANSI 颜色常量
 
-The following ANSI color constants are provided:
+LiteLogCpp 提供了以下 ANSI 颜色常量：
 
 ```cpp
 namespace ansi {
@@ -316,10 +315,9 @@ namespace ansi {
 
 
 
-## Future Plans（Maybe）
+## 未来计划
 
-- Add support for asynchronous logging
-- Add log filtering functionality
-- Support JSON format output
-- Add log file compression feature
-
+- 添加异步日志支持
+- 添加日志过滤功能
+- 支持 JSON 格式输出
+- 添加日志文件压缩功能
