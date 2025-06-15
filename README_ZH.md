@@ -7,6 +7,12 @@
 
 LiteLogCpp 是一个轻量级的 C++ 日志库，专为现代 C++ 应用程序设计。它提供了丰富的日志功能，包括多级日志、标签系统、彩色输出等，同时保持了简洁易用的接口。
 
+仓库链接: [https://github.com/vistar-terry/LiteLogCpp](https://github.com/vistar-terry/LiteLogCpp)
+
+issues: [https://github.com/vistar-terry/LiteLogCpp/issues](https://github.com/vistar-terry/LiteLogCpp/issues)
+
+如果对你有帮助，欢迎Star，有任何问题可以在issues页面交流。
+
 
 
 ## 特性
@@ -143,7 +149,7 @@ void consoleOutput(const bool& console_output);
 // 设置日志文件路径
 bool setLogFile(const std::string &file_path, bool append = true);
 
-// 设置日志目录
+// 设置日志目录与日志文件前缀
 bool setLogDirectory(const std::string &dir_path,
                     const std::string &file_prefix = "app",
                     bool append = true,
@@ -161,7 +167,7 @@ std::string getLogFilePath() const;
 - `console_output`: 是否开启控制台输出
 - `file_path`: 日志文件完整路径
 - `dir_path`: 日志目录路径
-- `file_prefix`: 日志文件名前缀
+- `file_prefix`: 日志文件名前缀（默认为app）
 - `append`: 是否追加到现有文件 (默认为 true)
 - `daily_rotation`: 是否按日期轮转文件 (默认为 false)
 
