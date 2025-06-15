@@ -420,11 +420,11 @@ public:
             if (color_mode_ == ColorMode::TAG)
             {
                 log_stream << getLevelColor(level) << getLevelStyle(level)
-                           << "[" << levelToString(level) << "]" << ansi::reset << " ";
+                           << "[" << levelToString(level) << "]" << ansi::reset;
             }
             else
             {
-                log_stream << "[" << levelToString(level) << "] ";
+                log_stream << "[" << levelToString(level) << "]";
             }
 
             // 添加标签
@@ -434,11 +434,11 @@ public:
                 {
                     TagConfig config = getTagConfig(tag);
                     log_stream << config.style << config.color
-                               << "[" << tag << "]" << ansi::reset << " ";
+                               << "[" << tag << "]" << ansi::reset;
                 }
                 else
                 {
-                    log_stream << "[" << tag << "] ";
+                    log_stream << "[" << tag << "]";
                 }
             }
 
@@ -446,7 +446,7 @@ public:
             log_stream << location_info;
 
             // 添加消息
-            log_stream << message_buffer.data();
+            log_stream << " " << message_buffer.data();
 
             // 整行颜色结束
             if (color_mode_ == ColorMode::LINE)
@@ -487,7 +487,7 @@ private:
     Logger()
         : current_level_(LogLevel::Info),
           console_output_(true),
-          color_mode_(ColorMode::LINE),
+          color_mode_(ColorMode::TAG),
           show_timestamp_(true),
           timestamp_precision_(TimestampPrecision::MILLISECONDS),
           location_mode_(LocationDisplayMode::FILENAME_ONLY),
@@ -603,7 +603,7 @@ private:
             break;
         }
 
-        oss << "] ";
+        oss << "]";
         return oss.str();
     }
 
@@ -644,7 +644,7 @@ private:
         // FULL_PATH 模式保持原样
 
         std::ostringstream loc_stream;
-        loc_stream << "[" << file_str << ":" << line << "-" << function << "] ";
+        loc_stream << "[" << file_str << ":" << line << "-" << function << "]";
         return loc_stream.str();
     }
 
